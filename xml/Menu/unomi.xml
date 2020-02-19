@@ -6,4 +6,10 @@
     <title>UnomiSettings</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/unomi/tab</path>
+    <page_callback>CRM_ctrl_unomi_Page_UnomiTab</page_callback>
+    <title>UnomiTab</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

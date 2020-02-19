@@ -1,7 +1,7 @@
 # be.ctrl.unomi
 
 ## Introduction
-CiviCRM UiT extension: Everything functionally related to UiT migration.
+Everything functionally related to integrating with Unomi in CiviCRM.
 
 ## Installation
 - You can directly clone to your CiviCRM extension directory using<br>

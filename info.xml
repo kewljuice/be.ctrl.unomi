@@ -2,7 +2,7 @@
 <extension key="be.ctrl.unomi" type="module">
   <file>unomi</file>
   <name>CiviCRM Unomi extension</name>
-  <description>Everything functionally related to integrating with Unomi in CiviCRM </description>
+  <description>Everything functionally related to integrating with Unomi in CiviCRM</description>
   <license>AGPL-3.0</license>
   <maintainer>
     <author>wouter.hechtermans</author>

@@ -144,6 +144,38 @@ function unomi_civicrm_entityTypes(&$entityTypes) {
   _unomi_civix_civicrm_entityTypes($entityTypes);
 }
 
+/**
+ * Returns TRUE if contact type is an organization
+ */
+function _unomi_civicrm_check_ind($cid) {
+  $sql = "SELECT contact_type FROM civicrm_contact WHERE id = $cid";
+  $dao =& CRM_Core_DAO::executeQuery($sql, []);
+  while ($dao->fetch()) {
+    if ($dao->contact_type == "Individual") {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implementation of CiviCRM tabs hook.
+ */
+function unomi_civicrm_tabset($tabsetName, &$tabs, $context) {
+  if ($tabsetName == 'civicrm/contact/view') {
+    $contactId = $context['contact_id'];
+    if (_unomi_civicrm_check_ind($contactId)) {
+      $url = CRM_Utils_System::url('civicrm/unomi/tab', "cid={$contactId}");
+      $tabs[] = [
+        'id' => 'unomi',
+        'url' => $url,
+        'title' => 'Unomi',
+        'weight' => 400,
+      ];
+    }
+  }
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
