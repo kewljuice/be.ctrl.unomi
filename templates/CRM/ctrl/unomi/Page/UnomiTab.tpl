@@ -2,7 +2,7 @@
 
   {* identifier id *}
   <div class="crm-section">
-    <p>The unomi identifier is {$unomi-identifier}</p>
+    <p>The unomi identifier is {$identifier}</p>
   </div>
 
   {* identifier data *}

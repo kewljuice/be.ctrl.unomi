@@ -54,6 +54,7 @@ function unomi_civicrm_postInstall() {
 function unomi_civicrm_uninstall() {
   // Remove setting variable(s).
   CRM_Core_BAO_Setting::setItem('', 'unomi', 'unomi-settings');
+  CRM_Core_BAO_Setting::setItem('', 'unomi', 'unomi-fields');
   // Continue.
   _unomi_civix_civicrm_uninstall();
 }
