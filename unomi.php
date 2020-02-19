@@ -1,7 +1,6 @@
 <?php
 
 require_once 'unomi.civix.php';
-use CRM_Unomi_ExtensionUtil as E;
 
 /**
  * Implements hook_civicrm_config().
@@ -27,6 +26,14 @@ function unomi_civicrm_xmlMenu(&$files) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
 function unomi_civicrm_install() {
+  // Set default settings variable(s).
+  $settings['unomi_url'] = 'unomi.dev';
+  $settings['unomi_internal_identifier'] = 'unomi:8181';
+  $settings['unomi_user'] = 'karaf';
+  $settings['unomi_pass'] = 'karaf';
+  $settings['site_scope'] = 'unomi-website';
+  CRM_Core_BAO_Setting::setItem(json_encode($settings), 'unomi', 'unomi-settings');
+  // Continue.
   _unomi_civix_civicrm_install();
 }
 
@@ -45,6 +52,9 @@ function unomi_civicrm_postInstall() {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
 function unomi_civicrm_uninstall() {
+  // Remove setting variable(s).
+  CRM_Core_BAO_Setting::setItem('', 'unomi', 'unomi-settings');
+  // Continue.
   _unomi_civix_civicrm_uninstall();
 }
 
@@ -141,23 +151,23 @@ function unomi_civicrm_entityTypes(&$entityTypes) {
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_preProcess
  *
-function unomi_civicrm_preProcess($formName, &$form) {
-
-} // */
+ * function unomi_civicrm_preProcess($formName, &$form) {
+ *
+ * } // */
 
 /**
  * Implements hook_civicrm_navigationMenu().
  *
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
  *
-function unomi_civicrm_navigationMenu(&$menu) {
-  _unomi_civix_insert_navigation_menu($menu, 'Mailings', array(
-    'label' => E::ts('New subliminal message'),
-    'name' => 'mailing_subliminal_message',
-    'url' => 'civicrm/mailing/subliminal',
-    'permission' => 'access CiviMail',
-    'operator' => 'OR',
-    'separator' => 0,
-  ));
-  _unomi_civix_navigationMenu($menu);
-} // */
+ * function unomi_civicrm_navigationMenu(&$menu) {
+ * _unomi_civix_insert_navigation_menu($menu, 'Mailings', array(
+ * 'label' => E::ts('New subliminal message'),
+ * 'name' => 'mailing_subliminal_message',
+ * 'url' => 'civicrm/mailing/subliminal',
+ * 'permission' => 'access CiviMail',
+ * 'operator' => 'OR',
+ * 'separator' => 0,
+ * ));
+ * _unomi_civix_navigationMenu($menu);
+ * } // */

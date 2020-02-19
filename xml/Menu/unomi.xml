@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/unomi/settings</path>
+    <page_callback>CRM_ctrl_unomi_Form_UnomiSettings</page_callback>
+    <title>UnomiSettings</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>

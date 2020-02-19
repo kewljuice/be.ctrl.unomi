@@ -6,10 +6,10 @@
  * The ExtensionUtil class provides small stubs for accessing resources of this
  * extension.
  */
-class CRM_Unomi_ExtensionUtil {
+class CRM_ctrl_unomi_ExtensionUtil {
   const SHORT_NAME = "unomi";
   const LONG_NAME = "be.ctrl.unomi";
-  const CLASS_PREFIX = "CRM_Unomi";
+  const CLASS_PREFIX = "CRM_ctrl_unomi";
 
   /**
    * Translate a string using the extension's domain.
@@ -77,7 +77,7 @@ class CRM_Unomi_ExtensionUtil {
 
 }
 
-use CRM_Unomi_ExtensionUtil as E;
+use CRM_ctrl_unomi_ExtensionUtil as E;
 
 /**
  * (Delegated) Implements hook_civicrm_config().
@@ -205,14 +205,14 @@ function _unomi_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
 }
 
 /**
- * @return CRM_Unomi_Upgrader
+ * @return CRM_ctrl_unomi_Upgrader
  */
 function _unomi_civix_upgrader() {
-  if (!file_exists(__DIR__ . '/CRM/Unomi/Upgrader.php')) {
+  if (!file_exists(__DIR__ . '/CRM/ctrl/unomi/Upgrader.php')) {
     return NULL;
   }
   else {
-    return CRM_Unomi_Upgrader_Base::instance();
+    return CRM_ctrl_unomi_Upgrader_Base::instance();
   }
 }
 
