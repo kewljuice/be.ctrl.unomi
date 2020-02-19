@@ -21,7 +21,7 @@
   <CustomFields>
     <CustomField>
       <name>Unomi_Identifier</name>
-      <label>Unomu identifier</label>
+      <label>Unomi identifier</label>
       <data_type>String</data_type>
       <html_type>Text</html_type>
       <is_required>0</is_required>
