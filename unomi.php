@@ -146,7 +146,7 @@ function unomi_civicrm_entityTypes(&$entityTypes) {
 }
 
 /**
- * Returns TRUE if contact type is an organization
+ * Returns TRUE if contact type is an individual.
  */
 function _unomi_civicrm_check_ind($cid) {
   $sql = "SELECT contact_type FROM civicrm_contact WHERE id = $cid";
@@ -173,6 +173,38 @@ function unomi_civicrm_tabset($tabsetName, &$tabs, $context) {
         'title' => 'Unomi',
         'weight' => 400,
       ];
+    }
+  }
+}
+
+/**
+ * Returns unomi identifier.
+ */
+function _unomi_get_identifier_by_id($cid) {
+  $id = NULL;
+  $fields = json_decode(CRM_Core_BAO_Setting::getItem('unomi', 'unomi-fields'), TRUE);
+  $result = civicrm_api3('Contact', 'getSingle', [
+    'sequential' => 1,
+    'return' => [$fields['unomi-identifier']],
+    'id' => $cid,
+  ]);
+  if (isset($result[$fields['unomi-identifier']])) {
+    $id = $result[$fields['unomi-identifier']];
+  }
+  return $id;
+}
+
+/**
+ * Implements hook_civicrm_merge().
+ * Update unomi data to reflect identifiers when contacts are merged.
+ */
+function unomi_civicrm_merge($type, &$data, $new_id = NULL, $old_id = NULL, $tables = NULL) {
+  if (!empty($new_id) && !empty($old_id) && $type == 'sqls') {
+    $new_unomi = _unomi_get_identifier_by_id($new_id);
+    $old_unomi = _unomi_get_identifier_by_id($old_id);
+    if (!empty($new_unomi) && !empty($old_unomi)) {
+      \Civi::log()
+        ->info("unomi_civicrm_merge: " . $new_unomi . " - " . $old_unomi);
     }
   }
 }

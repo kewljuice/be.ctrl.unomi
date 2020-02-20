@@ -14,13 +14,7 @@ class CRM_ctrl_unomi_Page_UnomiTab extends CRM_Core_Page {
     $id = NULL;
     if (isset($_REQUEST['cid'])) {
       $cid = $_REQUEST['cid'];
-      $fields = json_decode(CRM_Core_BAO_Setting::getItem('unomi', 'unomi-fields'), TRUE);
-      $result = civicrm_api3('Contact', 'getSingle', [
-        'sequential' => 1,
-        'return' => [$fields['unomi-identifier']],
-        'id' => $cid,
-      ]);
-      $id = $result[$fields['unomi-identifier']];
+      $id = _unomi_get_identifier_by_id($cid);
     }
     $this->assign('identifier', $id);
     // @todo Print overview for identifier.
