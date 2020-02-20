@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 require_once 'unomi.civix.php';
 
 /**
@@ -28,7 +32,6 @@ function unomi_civicrm_xmlMenu(&$files) {
 function unomi_civicrm_install() {
   // Set default settings variable(s).
   $settings['unomi_url'] = 'unomi.dev';
-  $settings['unomi_internal_identifier'] = 'unomi:8181';
   $settings['unomi_user'] = 'karaf';
   $settings['unomi_pass'] = 'karaf';
   $settings['site_scope'] = 'unomi-website';
@@ -209,8 +212,7 @@ function unomi_civicrm_merge($type, &$data, $new_id = NULL, $old_id = NULL, $tab
   }
 }
 
-// --- Functions below this ship commented out. Uncomment as required. ---
-
+// --- Functions below this ship commented out. Uncomment as required. ---.
 /**
  * Implements hook_civicrm_preProcess().
  *

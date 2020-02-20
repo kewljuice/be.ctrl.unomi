@@ -24,4 +24,7 @@
   <civix>
     <namespace>CRM/ctrl/unomi</namespace>
   </civix>
+  <classloader>
+    <psr4 prefix='CRM\ctrl\unomi\' path='CRM/ctrl/unomi'/>
+  </classloader>
 </extension>

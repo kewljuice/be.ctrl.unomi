@@ -24,6 +24,10 @@ Everything functionally related to integrating with Unomi in CiviCRM.
 
 ![Screenshot](/images/settings.png)
 
+- API url: public endpoint to Unomi, event collector & context fetch with session id.
+- API username
+- API password
+
 ## Usage
 
 - Unomi Tab on Individual overview
@@ -33,3 +37,8 @@ Everything functionally related to integrating with Unomi in CiviCRM.
 ## Known Issues
 
 (* FIXME *)
+
+## Useful links
+
+- https://civicrm.stackexchange.com/questions/20316/within-an-extension-how-can-load-a-custom-civi-name-spaced-class
+- http://unomi.apache.org/manual/latest/index.html#_useful_apache_unomi_urls

@@ -1,15 +1,13 @@
 <?php
 
-// AUTO-GENERATED FILE -- Civix may overwrite any changes made to this file
-use CRM_ctrl_unomi_ExtensionUtil as E;
-
+// AUTO-GENERATED FILE -- Civix may overwrite any changes made to this file.
 /**
- * Base class which provides helpers to execute upgrade logic
+ * Base class which provides helpers to execute upgrade logic.
  */
 class CRM_ctrl_unomi_Upgrader_Base {
 
   /**
-   * @var varies, subclass of this
+   * @var variessubclassofthis
    */
   static $instance;
 
@@ -19,22 +17,22 @@ class CRM_ctrl_unomi_Upgrader_Base {
   protected $ctx;
 
   /**
-   * @var string, eg 'com.example.myextension'
+   * @var stringegcomexamplemyextension
    */
   protected $extensionName;
 
   /**
-   * @var string, full path to the extension's source tree
+   * @var stringfullpathtotheextensionssourcetree
    */
   protected $extensionDir;
 
   /**
-   * @var array(revisionNumber) sorted numerically
+   * @var arrayrevisionNumbersortednumerically
    */
   private $revisions;
 
   /**
-   * @var boolean
+   * @var bool
    *   Flag to clean up extension revision data in civicrm_setting
    */
   private $revisionStorageIsDeprecated = FALSE;
@@ -42,9 +40,9 @@ class CRM_ctrl_unomi_Upgrader_Base {
   /**
    * Obtain a reference to the active upgrade handler.
    */
-  static public function instance() {
+  public static function instance() {
     if (!self::$instance) {
-      // FIXME auto-generate
+      // FIXME auto-generate.
       self::$instance = new CRM_ctrl_unomi_Upgrader(
         'be.ctrl.unomi',
         realpath(__DIR__ . '/../../../')
@@ -63,7 +61,7 @@ class CRM_ctrl_unomi_Upgrader_Base {
    * CRM_ctrl_unomi_Upgrader_Base::_queueAdapter($ctx, 'methodName', 'arg1', 'arg2');
    * @endcode
    */
-  static public function _queueAdapter() {
+  public static function _queueAdapter() {
     $instance = self::instance();
     $args = func_get_args();
     $instance->ctx = array_shift($args);
@@ -72,17 +70,21 @@ class CRM_ctrl_unomi_Upgrader_Base {
     return call_user_func_array(array($instance, $method), $args);
   }
 
+  /**
+   *
+   */
   public function __construct($extensionName, $extensionDir) {
     $this->extensionName = $extensionName;
     $this->extensionDir = $extensionDir;
   }
 
-  // ******** Task helpers ********
-
+  // ******** Task helpers ********.
   /**
    * Run a CustomData file.
    *
-   * @param string $relativePath the CustomData XML file path (relative to this extension's dir)
+   * @param string $relativePath
+   *   the CustomData XML file path (relative to this extension's dir)
+   *
    * @return bool
    */
   public function executeCustomDataFile($relativePath) {
@@ -91,9 +93,10 @@ class CRM_ctrl_unomi_Upgrader_Base {
   }
 
   /**
-   * Run a CustomData file
+   * Run a CustomData file.
    *
-   * @param string $xml_file  the CustomData XML file path (absolute path)
+   * @param string $xml_file
+   *   the CustomData XML file path (absolute path)
    *
    * @return bool
    */
@@ -106,7 +109,8 @@ class CRM_ctrl_unomi_Upgrader_Base {
   /**
    * Run a SQL file.
    *
-   * @param string $relativePath the SQL file path (relative to this extension's dir)
+   * @param string $relativePath
+   *   the SQL file path (relative to this extension's dir)
    *
    * @return bool
    */
@@ -142,10 +146,10 @@ class CRM_ctrl_unomi_Upgrader_Base {
    *
    * This is just a wrapper for CRM_Core_DAO::executeSql, but it
    * provides syntatic sugar for queueing several tasks that
-   * run different queries
+   * run different queries.
    */
   public function executeSql($query, $params = array()) {
-    // FIXME verify that we raise an exception on error
+    // FIXME verify that we raise an exception on error.
     CRM_Core_DAO::executeQuery($query, $params);
     return TRUE;
   }
@@ -170,7 +174,7 @@ class CRM_ctrl_unomi_Upgrader_Base {
     return $this->queue->createItem($task, array('weight' => -1));
   }
 
-  // ******** Revision-tracking helpers ********
+  // ******** Revision-tracking helpers ********.
 
   /**
    * Determine if there are any pending revisions.
@@ -205,8 +209,7 @@ class CRM_ctrl_unomi_Upgrader_Base {
           2 => $revision,
         ));
 
-        // note: don't use addTask() because it sets weight=-1
-
+        // note: don't use addTask() because it sets weight=-1.
         $task = new CRM_Queue_Task(
           array(get_class($this), '_queueAdapter'),
           array('upgrade_' . $revision),
@@ -246,6 +249,9 @@ class CRM_ctrl_unomi_Upgrader_Base {
     return $this->revisions;
   }
 
+  /**
+   *
+   */
   public function getCurrentRevision() {
     $revision = CRM_Core_BAO_Extension::getSchemaVersion($this->extensionName);
     if (!$revision) {
@@ -254,6 +260,9 @@ class CRM_ctrl_unomi_Upgrader_Base {
     return $revision;
   }
 
+  /**
+   *
+   */
   private function getCurrentRevisionDeprecated() {
     $key = $this->extensionName . ':version';
     if ($revision = CRM_Core_BAO_Setting::getItem('Extension', $key)) {
@@ -262,13 +271,19 @@ class CRM_ctrl_unomi_Upgrader_Base {
     return $revision;
   }
 
+  /**
+   *
+   */
   public function setCurrentRevision($revision) {
     CRM_Core_BAO_Extension::setSchemaVersion($this->extensionName, $revision);
-    // clean up legacy schema version store (CRM-19252)
+    // Clean up legacy schema version store (CRM-19252)
     $this->deleteDeprecatedRevision();
     return TRUE;
   }
 
+  /**
+   *
+   */
   private function deleteDeprecatedRevision() {
     if ($this->revisionStorageIsDeprecated) {
       $setting = new CRM_Core_BAO_Setting();
@@ -278,7 +293,7 @@ class CRM_ctrl_unomi_Upgrader_Base {
     }
   }
 
-  // ******** Hook delegates ********
+  // ******** Hook delegates ********.
 
   /**
    * @see https://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
@@ -345,7 +360,7 @@ class CRM_ctrl_unomi_Upgrader_Base {
    * @see https://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
    */
   public function onEnable() {
-    // stub for possible future use
+    // Stub for possible future use.
     if (is_callable(array($this, 'enable'))) {
       $this->enable();
     }
@@ -355,12 +370,15 @@ class CRM_ctrl_unomi_Upgrader_Base {
    * @see https://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
    */
   public function onDisable() {
-    // stub for possible future use
+    // Stub for possible future use.
     if (is_callable(array($this, 'disable'))) {
       $this->disable();
     }
   }
 
+  /**
+   *
+   */
   public function onUpgrade($op, CRM_Queue_Queue $queue = NULL) {
     switch ($op) {
       case 'check':

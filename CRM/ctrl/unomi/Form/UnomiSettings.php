@@ -3,7 +3,7 @@
 use CRM_ctrl_unomi_ExtensionUtil as E;
 
 /**
- * Form controller class
+ * Form controller class.
  *
  * @see https://wiki.civicrm.org/confluence/display/CRMDOC/QuickForm+Reference
  */
@@ -22,12 +22,6 @@ class CRM_ctrl_unomi_Form_UnomiSettings extends CRM_Core_Form {
       'unomi_url',
       'API url',
       ['value' => $decode['unomi_url']]
-    );
-    $this->add(
-      'text',
-      'unomi_internal_identifier',
-      'API internal identifier',
-      ['value' => $decode['unomi_internal_identifier']]
     );
     $this->add(
       'text',
@@ -65,15 +59,14 @@ class CRM_ctrl_unomi_Form_UnomiSettings extends CRM_Core_Form {
    * {@inheritdoc}
    */
   public function postProcess() {
-    // Get the submitted values as an array
+    // Get the submitted values as an array.
     $values = $this->controller->exportValues($this->_name);
     $settings['unomi_url'] = $values['unomi_url'];
-    $settings['unomi_internal_identifier'] = $values['unomi_internal_identifier'];
     $settings['unomi_user'] = $values['unomi_user'];
     $settings['unomi_pass'] = $values['unomi_pass'];
     $settings['site_scope'] = $values['site_scope'];
     $encode = json_encode($settings);
-    CRM_Core_BAO_Setting::setItem($encode, 'uit', 'uit-settings');
+    CRM_Core_BAO_Setting::setItem($encode, 'unomi', 'unomi-settings');
     parent::postProcess();
   }
 

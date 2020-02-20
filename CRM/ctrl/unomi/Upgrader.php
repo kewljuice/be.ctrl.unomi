@@ -16,12 +16,7 @@ class CRM_ctrl_unomi_Upgrader extends CRM_ctrl_unomi_Upgrader_Base {
   public function install() {
     // Install custom fields
     $res = CRM_Core_Resources::singleton();
-    $files = glob($res->getPath('be.ctrl.unomi') . '/xml/*-install.xml');
-    if (is_array($files)) {
-      foreach ($files as $file) {
-        $this->executeCustomDataFileByAbsPath($file);
-      }
-    }
+    $this->executeCustomDataFileByAbsPath($res->getPath('be.ctrl.unomi') . '/xml/cf1-install.xml');
     // Set initial custom_field variable(s).
     $fields['unomi-identifier'] = 'custom_' . CRM_Core_BAO_CustomField::getCustomFieldID('Unomi_Identifier', 'Unomi_Group');
     CRM_Core_BAO_Setting::setItem(json_encode($fields), 'unomi', 'unomi-fields');
