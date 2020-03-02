@@ -184,7 +184,7 @@ function unomi_civicrm_tabset($tabsetName, &$tabs, $context) {
  * Returns unomi identifier.
  */
 function _unomi_get_identifier_by_id($cid) {
-  $id = NULL;
+  $unomi_id = NULL;
   $fields = json_decode(CRM_Core_BAO_Setting::getItem('unomi', 'unomi-fields'), TRUE);
   $result = civicrm_api3('Contact', 'getSingle', [
     'sequential' => 1,
@@ -192,9 +192,9 @@ function _unomi_get_identifier_by_id($cid) {
     'id' => $cid,
   ]);
   if (isset($result[$fields['unomi-identifier']])) {
-    $id = $result[$fields['unomi-identifier']];
+    $unomi_id = $result[$fields['unomi-identifier']];
   }
-  return $id;
+  return $unomi_id;
 }
 
 /**

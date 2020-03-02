@@ -1,12 +1,17 @@
 <div class="crm-block">
 
   {* identifier id *}
-  <div class="crm-section">
-    <p>Unomi identifier: <strong>{$identifier}</strong></p>
-  </div>
+  {if $identifier}
+    <div class="crm-section">
+      <p>Unomi identifier: <strong>{$identifier}</strong></p>
+    </div>
+  {/if}
 
-  {* identifier data *}
-  <div class="crm-section">
-    <pre>{$data}</pre>
-  </div>
+  {* data *}
+  {foreach from=$data item=elementName}
+    <div class="crm-section">
+      <pre>{$elementName}</pre>
+    </div>
+  {/foreach}
+
 </div>

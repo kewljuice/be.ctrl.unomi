@@ -13,7 +13,6 @@ class CRM_ctrl_unomi_Form_UnomiSettings extends CRM_Core_Form {
    * {@inheritdoc}
    */
   public function buildQuickForm() {
-    // Get default values.
     $defaults = CRM_Core_BAO_Setting::getItem('unomi', 'unomi-settings');
     $decode = json_decode(utf8_decode($defaults), TRUE);
     // API Fields.
@@ -59,7 +58,6 @@ class CRM_ctrl_unomi_Form_UnomiSettings extends CRM_Core_Form {
    * {@inheritdoc}
    */
   public function postProcess() {
-    // Get the submitted values as an array.
     $values = $this->controller->exportValues($this->_name);
     $settings['unomi_url'] = $values['unomi_url'];
     $settings['unomi_user'] = $values['unomi_user'];

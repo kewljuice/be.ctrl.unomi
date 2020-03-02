@@ -5,70 +5,124 @@ namespace CRM\ctrl\unomi\Services;
 /**
  * Class for Unomi API actions.
  */
-class UnomiApi {
+class UnomiApi extends Unomi {
 
   /**
-   * @var array
-   * Stores settings.
+   * Get profile.
+   *
+   * @param string $profile_id
+   *   Unomi profile identifier.
+   *
+   * @return string
+   *   Response from get().
    */
-  private $settings;
+  public function getProfile($profile_id) {
+    $path = '/cxs/profiles/' . $profile_id;
+    $result = $this->get($path);
 
-  /**
-   * @var string
-   * Stores API url.
-   */
-  private $url;
-
-  /**
-   * @var string
-   * Stores API username.
-   */
-  private $user;
-
-  /**
-   * @var string
-   * Stores API url.
-   */
-  private $pass;
-
-  /**
-   * Constructor.
-   */
-  public function __construct() {
-    // Set settings from parameters.
-    $settings = \CRM_Core_BAO_Setting::getItem('unomi', 'unomi-settings');
-    $this->settings = json_decode($settings, TRUE);
-    // Set parameters.
-    $this->url = $this->settings['unomi_url'];
-    $this->user = $this->settings['unomi_user'];
-    $this->pass = $this->settings['unomi_pass'];
+    return $result;
   }
 
   /**
-   * Fetch profile.
+   * Get profile.
+   *
+   * @param string $profile_id
+   *   Unomi profile identifier.
    *
    * @return string
+   *   Response from get().
    */
-  public function fetchProfile($id) {
-    $profile = [];
-    $path = $this->url . '/cxs/profiles/' . $id;
-    // Send the request & save response to $data.
+  public function getSessions($profile_id) {
+    $path = '/cxs/profiles/' . $profile_id . '/sessions';
+    $result = $this->get($path);
+
+    return $result;
+  }
+
+  /**
+   * Set rule.
+   *
+   * @param string $json
+   *   Unomi rule as json string.
+   *
+   * @return string
+   *   Response from post().
+   */
+  public function setRule($json) {
+    $path = '/cxs/rules/';
+    $call = $this->post($path, $json);
+
+    return $call;
+  }
+
+  /**
+   * Set event.
+   *
+   * @param string $json
+   *   Unomi event as json string.
+   *
+   * @return string
+   *   Response from post().
+   */
+  public function setEvent($json) {
+    $path = '/eventcollector';
+    $call = $this->post($path, $json);
+
+    return $call;
+  }
+
+  /**
+   * GET call to Unomi.
+   *
+   * @param string $path
+   *   Unomi API path.
+   *
+   * @return string
+   *   Response from API call.
+   */
+  private function get($path) {
     $curl = curl_init();
-    // Set some cURL options.
     curl_setopt_array($curl, [
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_HEADER => FALSE,
-      CURLOPT_HTTPHEADER => ['Content-Type:application/json'],
-      CURLOPT_URL => $path,
-      CURLOPT_USERPWD => $this->user . ":" . $this->pass,
+      CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+      CURLOPT_URL => $this->settings['unomi_url'] . $path,
+      CURLOPT_USERPWD => $this->settings['unomi_user'] . ":" . $this->settings['unomi_pass'],
       CURLOPT_FOLLOWLOCATION => 1,
     ]);
-    // Send the request & save response to $data.
-    $profile = curl_exec($curl);
-    // Close request to clear up resources.
+    $data = curl_exec($curl);
     curl_close($curl);
-    // Pass results.
-    return $profile;
+
+    return $data;
+  }
+
+  /**
+   * POST call to Unomi.
+   *
+   * @param string $path
+   *   Unomi API path.
+   * @param string $json
+   *   Unomi JSON data.
+   *
+   * @return string
+   *   Response from API call.
+   */
+  private function post($path, $json) {
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+      CURLOPT_RETURNTRANSFER => 1,
+      CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+      CURLOPT_URL => $this->settings['unomi_url'] . $path,
+      CURLOPT_USERPWD => $this->settings['unomi_user'] . ":" . $this->settings['unomi_pass'],
+      CURLOPT_FOLLOWLOCATION => 1,
+      CURLOPT_POST => 1,
+      CURLOPT_POSTFIELDS => $json,
+    ]);
+    curl_exec($curl);
+    $data = curl_getinfo($curl);
+    curl_close($curl);
+
+    return $data;
   }
 
 }

@@ -30,9 +30,29 @@ Everything functionally related to integrating with Unomi in CiviCRM.
 
 ## Usage
 
-- Unomi Tab on Individual overview
+### Unomi Tab on Individual overview
+
+Add a valid profile id from Unomi in the individual contact summary, under fieldset 'Unomi'
 
 ![Screenshot](/images/tab.png)
+
+### Define CiviCRM fields in Unomi
+
+Define CiviCRM related fields in Unomi via rule, this api call passes all individual contact fields (default + custom) via API to Unomi.
+
+```
+$rule = civicrm_api3('Unomi', 'createrule');
+```
+
+### Update individual contact
+
+Updates a specific contact with fields from CiviCRM to Unomi via event.
+
+```
+$event = civicrm_api3('Unomi', 'createevent', [
+  'contact_id' => "",
+]);
+```
 
 ## Known Issues
 
@@ -42,3 +62,5 @@ Everything functionally related to integrating with Unomi in CiviCRM.
 
 - https://civicrm.stackexchange.com/questions/20316/within-an-extension-how-can-load-a-custom-civi-name-spaced-class
 - http://unomi.apache.org/manual/latest/index.html#_useful_apache_unomi_urls
+- https://stackoverflow.com/questions/45511956/remove-a-named-volume-with-docker-compose
+
