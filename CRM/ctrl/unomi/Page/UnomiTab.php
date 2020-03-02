@@ -1,12 +1,12 @@
 <?php
 
-use CRM\ctrl\unomi\Services\UnomiApi;
 use CRM\ctrl\unomi\Services\UnomiEventDefault;
+use CRM\ctrl\unomi\Services\UnomiProfileDefault;
 use CRM\ctrl\unomi\Services\UnomiRuleDefault;
 use CRM_ctrl_unomi_ExtensionUtil as E;
 
 /**
- *
+ * Custom contact tab to display Unomi specific information.
  */
 class CRM_ctrl_unomi_Page_UnomiTab extends CRM_Core_Page {
 
@@ -19,11 +19,10 @@ class CRM_ctrl_unomi_Page_UnomiTab extends CRM_Core_Page {
     // Print identifier.
     $id = NULL;
     if (isset($_REQUEST['cid'])) {
-      $cid = $_REQUEST['cid'];
-      $id = _unomi_get_identifier_by_id($cid);
       // Print overview for identifier.
-      $unomi = new UnomiApi();
-      $data['profile'] = json_encode(json_decode(utf8_decode($unomi->getProfile($id)), TRUE), JSON_PRETTY_PRINT);
+      $profile = new UnomiProfileDefault($_REQUEST['cid']);
+      $id = $profile->id();
+      $data['profile'] = $profile->json();
     }
     else {
       // Print unomi settings as fallback.

@@ -3,7 +3,7 @@
 namespace CRM\ctrl\unomi\Services;
 
 /**
- * Class to build Unomi Rule.
+ * Class to build Unomi Default Event.
  */
 class UnomiEventDefault extends UnomiEvent {
 

@@ -1,5 +1,7 @@
 <?php
 
+use CRM\ctrl\unomi\Services\UnomiProfileMerger;
+
 /**
  * @file
  */
@@ -181,34 +183,12 @@ function unomi_civicrm_tabset($tabsetName, &$tabs, $context) {
 }
 
 /**
- * Returns unomi identifier.
- */
-function _unomi_get_identifier_by_id($cid) {
-  $unomi_id = NULL;
-  $fields = json_decode(CRM_Core_BAO_Setting::getItem('unomi', 'unomi-fields'), TRUE);
-  $result = civicrm_api3('Contact', 'getSingle', [
-    'sequential' => 1,
-    'return' => [$fields['unomi-identifier']],
-    'id' => $cid,
-  ]);
-  if (isset($result[$fields['unomi-identifier']])) {
-    $unomi_id = $result[$fields['unomi-identifier']];
-  }
-  return $unomi_id;
-}
-
-/**
  * Implements hook_civicrm_merge().
  * Update unomi data to reflect identifiers when contacts are merged.
  */
 function unomi_civicrm_merge($type, &$data, $new_id = NULL, $old_id = NULL, $tables = NULL) {
   if (!empty($new_id) && !empty($old_id) && $type == 'sqls') {
-    $new_unomi = _unomi_get_identifier_by_id($new_id);
-    $old_unomi = _unomi_get_identifier_by_id($old_id);
-    if (!empty($new_unomi) && !empty($old_unomi)) {
-      \Civi::log()
-        ->info("unomi_civicrm_merge: " . $new_unomi . " - " . $old_unomi);
-    }
+    new UnomiProfileMerger($new_id, $old_id);
   }
 }
 

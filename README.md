@@ -38,7 +38,7 @@ Add a valid profile id from Unomi in the individual contact summary, under field
 
 ### Define CiviCRM fields in Unomi
 
-Define CiviCRM related fields in Unomi via rule, this api call passes all individual contact fields (default + custom) via API to Unomi.
+Define CiviCRM related fields in Unomi via *rule*, this api call passes all individual contact fields (default + custom) to Unomi.
 
 ```
 $rule = civicrm_api3('Unomi', 'createrule');
@@ -46,7 +46,7 @@ $rule = civicrm_api3('Unomi', 'createrule');
 
 ### Update individual contact
 
-Updates a specific contact with fields from CiviCRM to Unomi via event.
+This api call updates a specific contact with fields from CiviCRM to Unomi via *event*.
 
 ```
 $event = civicrm_api3('Unomi', 'createevent', [

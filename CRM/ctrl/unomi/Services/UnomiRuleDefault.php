@@ -3,7 +3,7 @@
 namespace CRM\ctrl\unomi\Services;
 
 /**
- * Class to build Unomi Rule.
+ * Class to build Unomi Default Rule.
  */
 class UnomiRuleDefault extends UnomiRule {
 
