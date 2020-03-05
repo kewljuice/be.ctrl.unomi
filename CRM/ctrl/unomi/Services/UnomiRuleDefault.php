@@ -37,11 +37,25 @@ class UnomiRuleDefault extends UnomiRule {
    *   JSON string.
    */
   protected function createJson() {
+    $output['itemId'] = $this->ruleID;
+    $output['itemType'] = "rule";
+    $output['version'] = 1;
+    $output['linkedItems'] = NULL;
+    $output['raiseEventOnlyOnceForProfile'] = FALSE;
+    $output['raiseEventOnlyOnceForSession'] = FALSE;
+    $output['priority'] = 0;
     // Metadata.
     $output['metadata'] = [
       'id' => $this->ruleID,
       'name' => $this->ruleID,
       'description' => "The Unomi rule for " . $this->ruleID,
+      'scope' => $this->settings['site_scope'],
+      'tags' => [],
+      'systemTags' => ['event', 'eventCondition'],
+      'enabled' => TRUE,
+      'missingPlugins' => FALSE,
+      'hidden' => FALSE,
+      'readOnly' => FALSE,
     ];
     // Condition.
     $output['condition'] = [

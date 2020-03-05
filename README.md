@@ -63,4 +63,5 @@ $event = civicrm_api3('Unomi', 'createevent', [
 - https://civicrm.stackexchange.com/questions/20316/within-an-extension-how-can-load-a-custom-civi-name-spaced-class
 - http://unomi.apache.org/manual/latest/index.html#_useful_apache_unomi_urls
 - https://stackoverflow.com/questions/45511956/remove-a-named-volume-with-docker-compose
+- https://medium.com/@otavio/giving-unomi-intelligence-a5a11053d595
 

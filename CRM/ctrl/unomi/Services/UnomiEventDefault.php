@@ -45,16 +45,16 @@ class UnomiEventDefault extends UnomiEvent {
     // Events.
     $output['events'][] = [
       'eventType' => $this->eventID,
-      'scope' => 'CiviCRM',
+      'scope' => $this->settings['site_scope'],
       'source' => [
         'itemType' => "site",
-        'scope' => "CiviCRM",
-        'itemId' => $this->settings['site_scope'],
+        'scope' => $this->settings['site_scope'],
+        'itemId' => "site",
       ],
       'target' => [
         'itemType' => "form",
-        'scope' => "CiviCRM",
-        'itemId' => "contactForm",
+        'scope' => $this->settings['site_scope'],
+        'itemId' => $this->eventID,
       ],
       'properties' => $this->fetchFieldValues($this->contactID, $this->fields),
     ];
