@@ -84,9 +84,14 @@ class UnomiEventDefault extends UnomiEvent {
       'id' => $contact_id,
     ]);
     if (!isset($contact['is_error'])) {
+      $profile = new UnomiProfileDefault($contact_id);
+      $json = json_decode($profile->json(), TRUE);
+      $properties = $json['properties'];
       foreach ($fields as $field) {
-        if (isset($contact[$field]) && !empty($contact[$field])) {
-          $results['civicrm_' . $field] = $contact[$field];
+        if (isset($contact[$field])) {
+          if (!empty($contact[$field]) or array_key_exists('civicrm_' . $field, $properties)) {
+            $results['civicrm_' . $field] = $contact[$field];
+          }
         }
       }
     }
