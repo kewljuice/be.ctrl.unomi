@@ -54,6 +54,34 @@ $event = civicrm_api3('Unomi', 'createevent', [
 ]);
 ```
 
+## Create Segment (example)
+
+```
+{
+	"metadata": {
+		"id": "developerSegmentCondition",
+		"name": "developerSegmentCondition",
+		"scope": "unomi-website",
+		"description": "The user has this segment if he is a developer.",
+		"readOnly": true
+	},
+	"condition": {
+		"parameterValues": {
+			"subConditions": [{
+				"parameterValues": {
+					"propertyName": "civicrm_job_title",
+					"comparisonOperator": "equals",
+					"propertyValue": "developer"
+				},
+				"type": "eventTypeCondition"
+			}],
+			"operator": "and"
+		},
+		"type": "booleanCondition"
+	}
+}
+```
+
 ## Known Issues
 
 (* FIXME *)
