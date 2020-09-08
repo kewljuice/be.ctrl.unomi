@@ -58,27 +58,29 @@ $event = civicrm_api3('Unomi', 'createevent', [
 
 ```
 {
-	"metadata": {
-		"id": "developerSegmentCondition",
-		"name": "developerSegmentCondition",
-		"scope": "unomi-website",
-		"description": "The user has this segment if he is a developer.",
-		"readOnly": true
-	},
-	"condition": {
-		"parameterValues": {
-			"subConditions": [{
-				"parameterValues": {
-					"propertyName": "civicrm_job_title",
-					"comparisonOperator": "equals",
-					"propertyValue": "developer"
-				},
-				"type": "eventTypeCondition"
-			}],
-			"operator": "and"
-		},
-		"type": "booleanCondition"
-	}
+  "metadata": {
+    "id": "developerSegmentCondition",
+    "name": "developerSegmentCondition",
+    "description": "The user has this segment if he is a developer.",
+    "scope": "unomi-website",
+    "readOnly": true
+  },
+  "condition": {
+    "type": "booleanCondition",
+    "parameterValues": {
+      "operator": "and",
+      "subConditions": [
+        {
+          "type": "profilePropertyCondition",
+          "parameterValues": {
+            "propertyName": "properties.civicrm_job_title",
+            "comparisonOperator": "equals",
+            "propertyValue": "developer"
+          }
+        }
+      ]
+    }
+  }
 }
 ```
 
